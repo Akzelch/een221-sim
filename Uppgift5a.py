@@ -15,7 +15,7 @@ with open("parameters.json", "r",encoding="utf-8") as f:
     motor_count, drive_wheel_radius, gear_ratio, gear_mesh_loss, gear_bearing_friction = drivetrain.values()
     kt, ra, friction_torque, nom_voltage, nom_current = motor.values()
 
-T = 20          
+T = 5  
 dt = 0.01       
 N = int(T/dt)   
 g = 9.81
@@ -50,5 +50,34 @@ for i in range(0,N):
     F_grav = mass * g * np.sin(alpha)
     a[i] = (F_drive - F_drag - F_roll - F_grav)/mass
     v[i+1] = v[i] + a[i] * dt
+    pos[i+1] = pos[i] + v[i] * dt
 
-print(v[N])
+#plot
+t = np.linspace(0, T, N+1)
+plt.figure()
+plt.plot(t,v)
+plt.ylabel("speed (m/s)")
+plt.xlabel("time (s)")
+
+plt.figure()
+plt.plot(t, a)
+plt.ylabel("acceleration m/s^2")
+plt.xlabel("time (s)")
+
+plt.figure()
+plt.plot(t[:-1], I[:-1])
+plt.ylabel("Motor current (A)")
+plt.xlabel("time (s)")
+
+plt.figure()
+plt.plot(t[:-1], U[:-1])
+plt.ylabel("Motor voltage")
+plt.xlabel("time (s)")
+
+plt.figure()
+plt.plot(t, pos)
+plt.ylabel("position (m)")
+plt.xlabel("time (s)")
+
+
+plt.show()
