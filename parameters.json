@@ -22,5 +22,8 @@
         "friction_torque": 1.6818,
         "nom_voltage": 264.8,
         "nom_current": 65.9
+    },
+    "environment": {
+        "angle_deg" : 3
     }
 }
