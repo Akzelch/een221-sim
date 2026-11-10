@@ -34,13 +34,11 @@ for i in range(0,N):
     
     s = np.sign(v[i]) or 1
 
-    j = (nom_voltage/2 - kt * gear_ratio*v[i]/drive_wheel_radius) / ra
-    j = min(j, nom_current)
-    I[i] = j
-    U[i] = ra * j + kt * v[i] / (drive_wheel_radius) * gear_ratio
+    I[i] = nom_current/2
+    U[i] = ra * I[i] + kt * v[i] / (drive_wheel_radius) * gear_ratio
 
 
-    motor_torque = kt * j
+    motor_torque = kt * I[i]
         
     net_torque = (((motor_torque - friction_torque) * gear_ratio) * (1 - gear_mesh_loss) - gear_bearing_friction * s) * motor_count
 
@@ -60,9 +58,10 @@ plt.ylabel("speed (m/s)")
 plt.xlabel("time (s)")
 
 plt.figure()
-plt.plot(t, a)
+plt.plot(t[:-1], a[:-1])
 plt.ylabel("acceleration m/s^2")
 plt.xlabel("time (s)")
+plt.ylim(0.8, 1)
 
 plt.figure()
 plt.plot(t[:-1], I[:-1])
