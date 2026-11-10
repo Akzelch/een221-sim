@@ -35,7 +35,6 @@ for i in range(0,N):
     s = np.sign(v[i]) or 1
 
     j = (nom_voltage/2 - kt * gear_ratio*v[i]/drive_wheel_radius) / ra
-    j = min(j, nom_current)
     I[i] = j
     U[i] = ra * j + kt * v[i] / (drive_wheel_radius) * gear_ratio
 
